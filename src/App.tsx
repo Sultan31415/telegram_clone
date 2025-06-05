@@ -7,6 +7,9 @@ import ChatWindow from './components/ChatWindow'
 import { getAIResponse } from './services/aiService'
 import type { Chat, Message, ChatState } from './types'
 
+const DEFAULT_AI_AVATAR = 'https://api.dicebear.com/7.x/bottts/svg?seed=ai';
+const DEFAULT_USER_AVATAR = 'https://api.dicebear.com/7.x/avataaars/svg?seed=user';
+
 function App() {
   const [state, setState] = useState<ChatState>(() => {
     const savedState = localStorage.getItem('chatState')
@@ -26,6 +29,7 @@ function App() {
       id: Date.now().toString(),
       title: `Chat ${state.chats.length + 1}`,
       messages: [],
+      avatar: DEFAULT_AI_AVATAR,
     }
     setState(prev => ({
       ...prev,
@@ -42,6 +46,7 @@ function App() {
       content,
       sender: 'user',
       timestamp: Date.now(),
+      avatar: DEFAULT_USER_AVATAR,
     };
 
     setState(prev => {
@@ -70,6 +75,7 @@ function App() {
         content: aiResponse,
         sender: 'ai',
         timestamp: Date.now(),
+        avatar: DEFAULT_AI_AVATAR,
       };
 
       setState(prev => {
@@ -96,6 +102,7 @@ function App() {
         content: 'Failed to get AI response. Please try again.',
         sender: 'ai',
         timestamp: Date.now(),
+        avatar: DEFAULT_AI_AVATAR,
       };
 
       setState(prev => {
@@ -128,6 +135,7 @@ function App() {
         searchQuery={state.searchQuery}
         onChatSelect={(chatId) => setState(prev => ({ ...prev, currentChatId: chatId }))}
         onSearchChange={(query) => setState(prev => ({ ...prev, searchQuery: query }))}
+        onNewChat={createNewChat}
       />
       <div className="flex-1 flex flex-col">
         {currentChat ? (

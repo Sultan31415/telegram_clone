@@ -3,6 +3,7 @@ export interface Message {
   content: string;
   sender: 'user' | 'ai';
   timestamp: number;
+  avatar?: string;
 }
 
 export interface Chat {
@@ -10,6 +11,7 @@ export interface Chat {
   title: string;
   messages: Message[];
   lastMessage?: Message;
+  avatar?: string;
 }
 
 export interface ChatState {
