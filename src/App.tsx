@@ -134,6 +134,7 @@ function App() {
           <ChatWindow
             messages={currentChat.messages}
             onSendMessage={handleSendMessage}
+            onNewChat={createNewChat}
           />
         ) : (
           <div className="flex-1 flex items-center justify-center">

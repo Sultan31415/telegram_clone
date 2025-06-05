@@ -5,9 +5,10 @@ import type { Message } from '../types';
 interface ChatWindowProps {
   messages: Message[];
   onSendMessage: (content: string) => void;
+  onNewChat: () => void;
 }
 
-const ChatWindow: React.FC<ChatWindowProps> = ({ messages, onSendMessage }) => {
+const ChatWindow: React.FC<ChatWindowProps> = ({ messages, onSendMessage, onNewChat }) => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +30,29 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, onSendMessage }) => {
 
   return (
     <div className="flex-1 flex flex-col h-screen">
+      <div className="border-b border-gray-200 p-4 flex justify-between items-center">
+        <h2 className="text-lg font-semibold">Chat</h2>
+        <button
+          onClick={onNewChat}
+          className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          title="New Chat"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-gray-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </button>
+      </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div
