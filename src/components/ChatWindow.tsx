@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import type { Message } from '../types';
 
 interface ChatWindowProps {
@@ -43,7 +44,32 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, onSendMessage }) => {
                   : 'bg-gray-200 text-gray-800'
               }`}
             >
-              {message.content}
+              {message.sender === 'user' ? (
+                message.content
+              ) : (
+                <div className="prose prose-sm dark:prose-invert max-w-none">
+                  <ReactMarkdown
+                    components={{
+                      p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                      ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal pl-4 mb-2">{children}</ol>,
+                      li: ({ children }) => <li className="mb-1">{children}</li>,
+                      code: ({ children }) => (
+                        <code className="bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5">
+                          {children}
+                        </code>
+                      ),
+                      pre: ({ children }) => (
+                        <pre className="bg-gray-100 dark:bg-gray-800 rounded p-2 mb-2 overflow-x-auto">
+                          {children}
+                        </pre>
+                      ),
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                </div>
+              )}
             </div>
           </div>
         ))}
